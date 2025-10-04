@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../../utils/utils.JS";
+import { BACKEND_URL } from "../../utils/utils.js";
 
 function NotesCreate() {
   const [title, setTitle] = useState("");
