@@ -59,7 +59,7 @@ function Purchases() {
   // Logout
   const handleLogout = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/notes/user/logout`, {
+      const response = await axios.get(`${BACKEND_URL}/user/logout`, {
         withCredentials: true,
       });
       // console.log(response.data)
