@@ -1,1 +1,1 @@
-export const BACKEND_URL="https://smartnotess.onrender.com"
+export const BACKEND_URL="https://smartnotess.onrender.com/api/v1"
