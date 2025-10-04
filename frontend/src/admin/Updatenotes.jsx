@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { LoaderOne } from "../components/ui/loader";
-import { BACKEND_URL } from "../../utils/utils.JS";
+import { BACKEND_URL } from "../../utils/utils.js";
 
 function Updatenotes() {
   const { id } = useParams();
