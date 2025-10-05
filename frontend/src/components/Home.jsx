@@ -51,12 +51,12 @@ function Home() {
 
         {/* Header */}
         <div className="max-w-4xl mx-auto pb-40">
-          <header className="flex flex-col w-[70vw] sm:flex-row items-center sm:justify-between p-4 sm:p-6 sm:bottom-24">
+          <header className="flex flex-row justify-between w-[70vw] sm:flex-row items-center sm:justify-between p-4 sm:p-6 sm:bottom-24">
             <div className="flex items-center space-x-2 mb-4 sm:mb-0">
               <img src="/logo.jpg" alt="logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
               <h1 className="text-white font-bold text-xl sm:text-2xl">SmartNotes</h1>
             </div>
-            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto items-center sm:items-start">
+            <div className="flex flex-row sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-[20vw] sm:w-auto items-center sm:items-start">
               {isLoggedIn ? (
                 <button
                   onClick={handleLogout}
@@ -68,13 +68,13 @@ function Home() {
                 <>
                   <Link
                     to={"/login"}
-                    className="bg-transparent text-white text-sm sm:text-lg py-2 px-4 border border-white rounded w-full sm:w-auto text-center"
+                    className="bg-transparent text-white text-sm sm:text-lg py-2 px-4 mx-4 border border-white rounded w-full sm:w-auto text-center"
                   >
                     Login
                   </Link>
                   <Link
                     to={"/signup"}
-                    className="bg-transparent text-white text-sm sm:text-lg py-2 px-4 border border-white rounded w-full sm:w-auto text-center"
+                    className="relative bottom-0.5 sm:bottom-0 bg-transparent text-white text-sm sm:text-lg py-2 px-4 border border-white rounded w-full sm:w-auto text-center"
                   >
                     Signup
                   </Link>

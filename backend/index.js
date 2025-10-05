@@ -61,9 +61,9 @@ app.use("/api/v1/order",orderRoute)
 //         api_secret:process.env.api_secret
 //     });
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
