@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { InfiniteMovingCardsDemo } from './MovingCard';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { InfiniteMovingCardsDemo } from "./MovingCard";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
 // import { WavyBackground } from "../components/ui/wavy-background";
 import { Vortex } from "../components/ui/vortex";
-import { BACKEND_URL } from '../../utils/utils.js';
+import { BACKEND_URL } from "../../utils/utils.js";
 
 function Home() {
   const [notes, setNotes] = useState([]);
@@ -48,13 +48,18 @@ function Home() {
   return (
     <div className="bg-black min-h-screen w-full">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Header */}
         <div className="max-w-4xl mx-auto pb-40">
           <header className="flex flex-row justify-between w-[70vw] sm:flex-row items-center sm:justify-between p-4 sm:p-6 sm:bottom-24">
             <div className="flex items-center space-x-2 mb-4 sm:mb-0">
-              <img src="/logo.jpg" alt="logo" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
-              <h1 className="text-white font-bold text-xl sm:text-2xl">SmartNotes</h1>
+              <img
+                src="/logo.jpg"
+                alt="logo"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+              />
+              <h1 className="text-white font-bold text-xl sm:text-2xl">
+                SmartNotes
+              </h1>
             </div>
             <div className="flex flex-row sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-[20vw] sm:w-auto items-center sm:items-start">
               {isLoggedIn ? (
@@ -82,40 +87,39 @@ function Home() {
               )}
             </div>
           </header>
-           </div>
-          {/* Hero Section */}
-          <div className="w-[calc(100%-1rem)] mx-0 rounded-md  h-[30rem] overflow-hidden relative bottom-36">
-          <Vortex backgroundColor="black"
-        className="flex items-center flex-col justify-center px-2 md:px-10 py-4 w-full h-full "
->
-          <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold text-center mt-8 sm:mt-12">
-            SmartNotes
-          </p>
-          <p className="text-sm sm:text-base md:text-lg mt-4 text-white font-normal text-center px-2 sm:px-0">
-            Sharpen your Knowledge with notes crafted by experts.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-6 sm:mt-8">
-            <Link
-              to={"/notes"}
-              className="bg-white text-purple-600 py-2 sm:py-3 px-4 sm:px-6 rounded font-semibold hover:text-black hover:bg-white transition-all w-full sm:w-auto text-center"
-            >
-              Explore notes
-            </Link>
-            <Link
-              to={"https://www.youtube.com"}
-              className="bg-white text-black py-2 sm:py-3 px-4 sm:px-6 rounded font-semibold hover:text-purple-600 hover:bg-white transition-all w-full sm:w-auto text-center"
-            >
-              Notes videos
-            </Link>
-              
-          
         </div>
-        </Vortex>
+        {/* Hero Section */}
+        <div className="w-[calc(100%-1rem)] mx-0 rounded-md  h-[30rem] overflow-hidden relative bottom-36">
+          <Vortex
+            backgroundColor="black"
+            className="flex items-center flex-col justify-center px-2 md:px-10 py-4 w-full h-full "
+          >
+            <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold text-center mt-8 sm:mt-12">
+              SmartNotes
+            </p>
+            <p className="text-sm sm:text-base md:text-lg mt-4 text-white font-normal text-center px-2 sm:px-0">
+              Sharpen your Knowledge with notes crafted by experts.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-6 sm:mt-8">
+              <Link
+                to={"/notes"}
+                className="bg-white text-purple-600 py-2 sm:py-3 px-4 sm:px-6 rounded font-semibold hover:text-black hover:bg-white transition-all w-full sm:w-auto text-center"
+              >
+                Explore notes
+              </Link>
+              <Link
+                to={"https://www.youtube.com"}
+                className="bg-white text-black py-2 sm:py-3 px-4 sm:px-6 rounded font-semibold hover:text-purple-600 hover:bg-white transition-all w-full sm:w-auto text-center"
+              >
+                Notes videos
+              </Link>
+            </div>
+          </Vortex>
         </div>
 
         {/* Infinite Moving Cards */}
-         <hr className="my-12 border-gray-600 h-5" />
+        <hr className="my-12 border-gray-600 h-5" />
         <div className="mt-12">
           <InfiniteMovingCardsDemo className="bg-white/80 w-full" />
         </div>
@@ -128,15 +132,25 @@ function Home() {
             {/* Logo & Social */}
             <div className="flex flex-col items-center sm:items-start">
               <div className="flex items-center space-x-2">
-                <img src='/logo.jpg' alt="" className="w-10 h-10 rounded-full" />
+                <img
+                  src="/logo.jpg"
+                  alt=""
+                  className="w-10 h-10 rounded-full"
+                />
                 <h1 className="text-2xl font-bold">SmartNotes</h1>
               </div>
               <div className="mt-3 flex flex-col items-center sm:items-start">
                 <p className="mb-2">Follow us</p>
                 <div className="flex space-x-4">
-                  <a href="#"><FaFacebook className="text-2xl hover:text-blue-400 duration-300" /></a>
-                  <a href="#"><FaInstagram className="text-2xl hover:text-pink-600 duration-300" /></a>
-                  <a href="#"><FaTwitter className="text-2xl hover:text-blue-600 duration-300" /></a>
+                  <a href="#">
+                    <FaFacebook className="text-2xl hover:text-blue-400 duration-300" />
+                  </a>
+                  <a href="#">
+                    <FaInstagram className="text-2xl hover:text-pink-600 duration-300" />
+                  </a>
+                  <a href="#">
+                    <FaTwitter className="text-2xl hover:text-blue-600 duration-300" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -145,19 +159,33 @@ function Home() {
             <div className="flex flex-col items-center sm:items-start">
               <h3 className="text-lg font-semibold mb-4">Connects</h3>
               <ul className="space-y-2 text-gray-100 text-center sm:text-left">
-                <li className="hover:text-white cursor-pointer duration-300">YouTube - Study Notes</li>
-                <li className="hover:text-white cursor-pointer duration-300">Telegram - Study Notes</li>
-                <li className="hover:text-white cursor-pointer duration-300">GitHub - Study Notes</li>
+                <li className="hover:text-white cursor-pointer duration-300">
+                  YouTube - Study Notes
+                </li>
+                <li className="hover:text-white cursor-pointer duration-300">
+                  Telegram - Study Notes
+                </li>
+                <li className="hover:text-white cursor-pointer duration-300">
+                  GitHub - Study Notes
+                </li>
               </ul>
             </div>
 
             {/* Policies */}
             <div className="flex flex-col items-center sm:items-start">
-              <h3 className="text-lg font-semibold mb-4">Copyrights &#169; 2025</h3>
+              <h3 className="text-lg font-semibold mb-4">
+                Copyrights &#169; 2025
+              </h3>
               <ul className="space-y-2 text-gray-100 text-center sm:text-left">
-                <li className="hover:text-white cursor-pointer duration-300">Terms & Conditions</li>
-                <li className="hover:text-white cursor-pointer duration-300">Privacy Policy</li>
-                <li className="hover:text-white cursor-pointer duration-300">Refund & Cancellation</li>
+                <li className="hover:text-white cursor-pointer duration-300">
+                  Terms & Conditions
+                </li>
+                <li className="hover:text-white cursor-pointer duration-300">
+                  Privacy Policy
+                </li>
+                <li className="hover:text-white cursor-pointer duration-300">
+                  Refund & Cancellation
+                </li>
               </ul>
             </div>
           </div>

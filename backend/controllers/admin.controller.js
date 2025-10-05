@@ -1,15 +1,15 @@
 // import express from "express"
 
-import bcrypt from "bcryptjs"
-import {z} from 'zod'
+import bcrypt from "bcryptjs";
+import { z } from "zod";
 import jwt from "jsonwebtoken";
 import config from "../config.js";
-import { Admin} from "../models/admin.model.js";
+import { Admin } from "../models/admin.model.js";
 
-export const signup=async (req,res)=>{
-    const {firstName,lastName,email,password}=req.body
+export const signup = async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
 
-    const adminSchema=z.object({
+  const adminSchema = z.object({
     firstName: z
       .string()
       .min(3, { message: "firstName must be atleast 3 char long" }),
@@ -20,41 +20,41 @@ export const signup=async (req,res)=>{
     password: z
       .string()
       .min(6, { message: "password must be atleast 6 char long" }),
-    })
-    const validatedData = adminSchema.safeParse(req.body);
-    if (!validatedData.success) {
+  });
+  const validatedData = adminSchema.safeParse(req.body);
+  if (!validatedData.success) {
     return res
       .status(400)
       .json({ errors: validatedData.error.issues.map((err) => err.message) });
   }
 
-    const hashedPassword=await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    try {
-     const existingAdmin = await Admin.findOne({ email: email });
+  try {
+    const existingAdmin = await Admin.findOne({ email: email });
     if (existingAdmin) {
       return res.status(400).json({ errors: "Admin already exists" });
     }
 
-        if(!firstName || !lastName || !email || !password){
-            res.status(400).json({message:"All fields are required"})
-        }
-        const newAdmin=new Admin({
-            firstName,
-            lastName,
-            email,
-            password:hashedPassword
-        })
-        await newAdmin.save();
-        if(!newAdmin){
-            res.status(500).json({message:"Admin Signup error"})
-        }
-        res.status(201).json({message:"Admin Signup Successfully"})
-    } catch (error) {
-        console.log("Admin Signup error",error)
-        res.status(400).json({message:"Admin Signup error"})
+    if (!firstName || !lastName || !email || !password) {
+      res.status(400).json({ message: "All fields are required" });
     }
-}
+    const newAdmin = new Admin({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
+    await newAdmin.save();
+    if (!newAdmin) {
+      res.status(500).json({ message: "Admin Signup error" });
+    }
+    res.status(201).json({ message: "Admin Signup Successfully" });
+  } catch (error) {
+    console.log("Admin Signup error", error);
+    res.status(400).json({ message: "Admin Signup error" });
+  }
+};
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -88,10 +88,10 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout =async (req, res) => {
+export const logout = async (req, res) => {
   try {
-    if(!req.cookies.jwt){
-       return res.status(501).json({errors:"Login In First"})
+    if (!req.cookies.jwt) {
+      return res.status(501).json({ errors: "Login In First" });
     }
     res.clearCookie("jwt");
     res.status(200).json({ message: "Logged out successfully" });

@@ -38,15 +38,12 @@ function OurNotes() {
   // delete notes code
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        `${BACKEND_URL}/notes/delete/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.delete(`${BACKEND_URL}/notes/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       toast.success(response.data.message);
       const updatedNotes = notes.filter((notes) => notes._id !== id);
       setnotes(updatedNotes);
@@ -57,12 +54,16 @@ function OurNotes() {
   };
 
   if (loading) {
-    return <p className="text-center text-gray-500"><LoaderOne/></p>;
+    return (
+      <p className="text-center text-gray-500">
+        <LoaderOne />
+      </p>
+    );
   }
 
   return (
     <div className="bg-gray-100 p-8 space-y-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Our notes</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Our Notes</h1>
       <Link
         className="bg-purple-600 py-2 px-4 rounded-lg text-white hover:bg-orange-950 duration-300"
         to={"/admin/dashboard"}
@@ -95,7 +96,7 @@ function OurNotes() {
                 ₹{notes.price}{" "}
                 <span className="line-through text-gray-500">₹300</span>
               </div>
-              <div className="text-green-600 text-sm mt-2">10 % off</div>
+              <div className="text-green-600 text-sm mt-2">20 % off</div>
             </div>
 
             <div className="flex justify-between">

@@ -47,7 +47,11 @@ function Login() {
         {/* Header */}
         <header className="absolute top-0 left-0 w-full flex justify-between items-center p-5  ">
           <div className="flex items-center space-x-2">
-            <img src='/logo.jpg' alt="Logo" className="w-10 h-10 rounded-full" />
+            <img
+              src="/logo.jpg"
+              alt="Logo"
+              className="w-10 h-10 rounded-full"
+            />
             <Link to={"/"} className="text-xl font-bold text-white-500">
               SmartNotes
             </Link>
