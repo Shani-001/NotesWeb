@@ -186,7 +186,7 @@ function Purchases() {
       ></iframe> */}
 
       {/* Download Button */}
-      <a
+      {/* <a
         href={purchase.notesPdf.url}
         download
         target="_blank"
@@ -194,7 +194,16 @@ function Purchases() {
         className="mt-2 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-800"
       >
         <FaDownload className="mr-2" /> Download PDF
-      </a>
+      </a> */}
+      <a
+  href={`${purchase.notesPdf.url.replace("/upload/", "/upload/fl_attachment:")}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-2 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-800"
+>
+  <FaDownload className="mr-2" /> Download PDF
+</a>
+
     </div>
   )}
                   </div>
