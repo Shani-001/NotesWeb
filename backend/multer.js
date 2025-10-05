@@ -2,8 +2,10 @@ import multer from "multer";
 import fs from "fs";
 
 // Ensure folders exist
-if (!fs.existsSync("uploads/images")) fs.mkdirSync("uploads/images", { recursive: true });
-if (!fs.existsSync("uploads/pdfs")) fs.mkdirSync("uploads/pdfs", { recursive: true });
+if (!fs.existsSync("uploads/images"))
+  fs.mkdirSync("uploads/images", { recursive: true });
+if (!fs.existsSync("uploads/pdfs"))
+  fs.mkdirSync("uploads/pdfs", { recursive: true });
 
 // Multer storage
 const storage = multer.diskStorage({

@@ -19,7 +19,7 @@ function Notes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar
-  const [search,setSearch]=useState("")
+  const [search, setSearch] = useState("");
 
   console.log("notes: ", notes);
 
@@ -49,7 +49,6 @@ function Notes() {
     };
     fetchnotes();
   }, []);
-
 
   // Logout
   const handleLogout = async () => {
@@ -88,7 +87,11 @@ function Notes() {
         } md:translate-x-0 md:static`}
       >
         <div className="flex items-center mb-10 mt-10 md:mt-0">
-          <img src="/logo.jpg" alt="Profile" className="rounded-full h-12 w-12" />
+          <img
+            src="/logo.jpg"
+            alt="Profile"
+            className="rounded-full h-12 w-12"
+          />
         </div>
         <nav>
           <ul>
@@ -114,8 +117,8 @@ function Notes() {
             </li>
             <li>
               {isLoggedIn ? (
-                <Link to={"/"}
-                  
+                <Link
+                  to={"/"}
                   className="flex items-center"
                   onClick={handleLogout}
                 >
@@ -141,11 +144,11 @@ function Notes() {
                 type="text"
                 placeholder="Type here to search..."
                 className="border border-gray-300 rounded-l-full px-4 py-2 h-10 focus:outline-none"
-                onChange={(e)=>{setSearch(e.target.value)}}
-                
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
-              <button className="h-10 border border-gray-300 rounded-r-full px-4 flex items-center justify-center"
-              >
+              <button className="h-10 border border-gray-300 rounded-r-full px-4 flex items-center justify-center">
                 <FiSearch className="text-xl text-gray-600" />
               </button>
             </div>
@@ -157,7 +160,9 @@ function Notes() {
         {/* Vertically Scrollable notes Section */}
         <div className="overflow-y-auto h-[75vh]">
           {loading ? (
-            <p className="text-center text-gray-500"><LoaderOne/></p>
+            <p className="text-center text-gray-500">
+              <LoaderOne />
+            </p>
           ) : notes.length === 0 ? (
             // Check if notes array is empty
             <p className="text-center text-gray-500">
@@ -166,42 +171,46 @@ function Notes() {
           ) : (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
               {notes
-              .filter((note) =>
-               note.title.toLowerCase().includes(search.toLowerCase())
-                 )
-              .map((notes) => (
-                <div
-                  key={notes._id}
-                  className="border border-gray-200 rounded-lg p-4 shadow-2xs"
-                >
-                  <img
-                    src={notes.image.url}
-                    alt={notes.title}
-                    className="rounded mb-4 w-full h-[50vh]"
-                  />
-                  <h2 className="font-bold text-lg mb-2">{notes.title}</h2>
-                  <p className="text-gray-600 mb-4 ">
-                    {notes.description.length > 100
-                      ? `${notes.description.slice(0, 100)}...`
-                      : notes.description}
-                  </p>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="font-bold text-xl">
-                      ₹{notes.price}{" "}
-                      <span className="text-gray-500 line-through">5999</span>
-                    </span>
-                    <span className="text-white-600">20% off</span>
-                  </div>
-
-                  {/* Buy page */}
-                  <Link
-                    to={`/buy/${notes._id}`} // Pass notesId in URL
-                    className="bg-purple-500 w-full text-white px-4 py-2 rounded-lg hover:bg-blue-900 duration-300"
+                .filter((note) =>
+                  note.title.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((notes) => (
+                  <div
+                    key={notes._id}
+                    className="border border-gray-200 rounded-lg p-4 shadow-2xs"
                   >
-                    Buy Now
-                  </Link>
-                </div>
-              ))}
+                    <img
+                      src={notes.image.url}
+                      alt={notes.title}
+                      className="rounded mb-4 w-full h-[50vh]"
+                    />
+                    <h2 className="font-bold text-lg mb-2">{notes.title}</h2>
+                    <p className="text-gray-600 mb-4 ">
+                      {notes.description.length > 100
+                        ? `${notes.description.slice(0, 100)}...`
+                        : notes.description}
+                    </p>
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="font-bold text-xl">
+                        ₹{notes.price}{" "}
+                        <span className="text-gray-500 line-through">300</span>
+                      </span>
+                      <span className="text-white-600 text-green-600">
+                        20% off
+                      </span>
+                    </div>
+
+                    {/* Buy page */}
+                    <div>
+                      <Link
+                        to={`/buy/${notes._id}`} // Pass notesId in URL
+                        className="bg-purple-500 w-full text-white px-4 py-2 rounded-lg hover:bg-blue-900 duration-300"
+                      >
+                        Buy Now
+                      </Link>
+                    </div>
+                  </div>
+                ))}
             </div>
           )}
         </div>

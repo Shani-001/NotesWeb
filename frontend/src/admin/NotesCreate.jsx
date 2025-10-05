@@ -66,7 +66,7 @@ function NotesCreate() {
           withCredentials: true,
         }
       );
-      console.log(response)
+      console.log(response);
       toast.success(response.data.message || "Notes created successfully");
       navigate("/admin/our-notes");
       // Reset form
@@ -83,9 +83,11 @@ function NotesCreate() {
   };
 
   return (
-    <div className="min-h-screen py-10 bg-gray-600">
+    <div className="min-h-screen py-10 bg-gray-600 p-7">
       <div className="max-w-4xl mx-auto p-6 border rounded-lg shadow-2xl bg-white">
-        <h3 className="text-2xl font-semibold mb-8">Create Notes</h3>
+        <h3 className="text-3xl font-semibold mb-8 text-center">
+          Create Notes
+        </h3>
 
         <form onSubmit={handleCreateCourse} className="space-y-6">
           {/* Title */}

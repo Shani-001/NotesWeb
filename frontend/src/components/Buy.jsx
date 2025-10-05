@@ -6,7 +6,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { BACKEND_URL } from "../../utils/utils.js";
 function Buy() {
   const { notesId } = useParams();
-  console.log(notesId)
+  console.log(notesId);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ function Buy() {
   const [error, setError] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = user?.token;  //using optional chaining to avoid crashing incase token is not there!!!
+  const token = user?.token; //using optional chaining to avoid crashing incase token is not there!!!
 
   const stripe = useStripe();
   const elements = useElements();

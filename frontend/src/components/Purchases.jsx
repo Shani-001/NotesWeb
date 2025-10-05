@@ -18,14 +18,13 @@ function Purchases() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar open state
 
   const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   const token = user?.token; // using optional chaining to avoid app crashing
 
   // console.log("purchases: ", purchases);
 
   // Token handling
   useEffect(() => {
- 
     if (token) {
       setIsLoggedIn(true);
     } else {
@@ -178,34 +177,19 @@ function Purchases() {
                       ${purchase.price} only
                     </span>
                     {purchase.notesPdf?.url && (
-    <div className="mt-4">
-      {/* <iframe
-        src={purchase.notesPdf.url}
-        title="notes-pdf"
-        className="w-full h-48 border rounded"
-      ></iframe> */}
-
-      {/* Download Button */}
-      {/* <a
-        href={purchase.notesPdf.url}
-        download
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-2 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-800"
-      >
-        <FaDownload className="mr-2" /> Download PDF
-      </a> */}
-      <a
-  href={`${purchase.notesPdf.url.replace("/upload/", "/upload/fl_attachment:")}`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-2 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-800"
->
-  <FaDownload className="mr-2" /> Download PDF
-</a>
-
-    </div>
-  )}
+                      <div className="mt-4">
+                        
+                        <a
+                          href={purchase.notesPdf.url}
+                          download
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-800"
+                        >
+                          <FaDownload className="mr-2" /> Download PDF
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -7,19 +7,19 @@ import { BACKEND_URL } from "../../utils/utils.js";
 
 function Updatenotes() {
   const { id } = useParams();
-// console.log(id)
+  // console.log(id)
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(true);
-  const [notesPdf,setnotesPdf]=useState("")
+  const [notesPdf, setnotesPdf] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const fetchnotesData = async () => {
       try {
-        const response= await axios.get(`${BACKEND_URL}/notes/notes/${id}`, {
+        const response = await axios.get(`${BACKEND_URL}/notes/notes/${id}`, {
           withCredentials: true,
         });
         console.log(response.data);
@@ -28,7 +28,7 @@ function Updatenotes() {
         setPrice(response.data.notes.price);
         setImage(response.data.notes.image.url);
         setImagePreview(response.data.notes.image.url);
-        setnotesPdf(response.data.notes.notesPdf.url)
+        setnotesPdf(response.data.notes.notesPdf.url);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -48,7 +48,7 @@ function Updatenotes() {
       setImage(file);
     };
   };
-    const changePdfHandler = (e) => {
+  const changePdfHandler = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     setnotesPdf(file);
@@ -60,11 +60,11 @@ function Updatenotes() {
     formData.append("description", description);
     formData.append("price", price);
     if (image && typeof image !== "string") {
-  formData.append("image", image); // not "imageUrl"
-}
-if(notesPdf && typeof notesPdf !=="string"){
-  formData.append("notesPdf", notesPdf);
-}
+      formData.append("image", image); // not "imageUrl"
+    }
+    if (notesPdf && typeof notesPdf !== "string") {
+      formData.append("notesPdf", notesPdf);
+    }
     const admin = JSON.parse(localStorage.getItem("admin"));
     const token = admin.token;
     if (!token) {
@@ -78,7 +78,7 @@ if(notesPdf && typeof notesPdf !=="string"){
         {
           headers: {
             Authorization: `Bearer ${token}`,
-             "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         }
@@ -92,14 +92,20 @@ if(notesPdf && typeof notesPdf !=="string"){
   };
 
   if (loading) {
-    return <p className="text-center text-gray-500"><LoaderOne/></p>;
+    return (
+      <p className="text-center text-gray-500">
+        <LoaderOne />
+      </p>
+    );
   }
 
   return (
     <div>
-      <div className="min-h-screen py-10 bg-gray-600 z-10">
+      <div className="min-h-screen py-10 bg-gray-600 z-10 p-7">
         <div className="max-w-4xl mx-auto p-6 border rounded-lg shadow-lg bg-white z-20">
-          <h3 className="text-2xl font-semibold mb-8">Update notes</h3>
+          <h3 className="text-3xl font-semibold mb-8 text-center">
+            Update Notes
+          </h3>
           <form onSubmit={handleUpdatenotes} className="space-y-6">
             <div className="space-y-2">
               <label className="block text-lg">Title</label>
@@ -140,7 +146,7 @@ if(notesPdf && typeof notesPdf !=="string"){
                 <img
                   src={imagePreview ? `${imagePreview}` : "/imgPL.webp"}
                   alt="notes"
-                  className="w-[30vw] max-w-sm h-[70vh] rounded-md object-cover"
+                  className="w-[70vw] max-w-sm h-[70vh] rounded-md object-cover"
                 />
               </div>
               <input
@@ -150,19 +156,17 @@ if(notesPdf && typeof notesPdf !=="string"){
               />
             </div>
 
-            
-          {/* PDF */}
-          <div className="space-y-2">
-            <label className="block text-lg">Notes PDF</label>
-            <input
-              type="file"
-              accept="application/pdf"
-              onChange={changePdfHandler}
-              className="w-full px-3 py-2 border rounded-md outline-none"
-            />
-            {notesPdf && <p className="text-sm mt-1">{notesPdf.name}</p>}
-          </div>
-
+            {/* PDF */}
+            <div className="space-y-2">
+              <label className="block text-lg">Notes PDF</label>
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={changePdfHandler}
+                className="w-full px-3 py-2 border rounded-md outline-none"
+              />
+              {notesPdf && <p className="text-sm mt-1">{notesPdf.name}</p>}
+            </div>
 
             <button
               type="submit"
