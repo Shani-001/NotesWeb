@@ -60,7 +60,7 @@ function Home() {
               {isLoggedIn ? (
                 <button
                   onClick={handleLogout}
-                  className="bg-transparent text-white text-sm sm:text-lg py-2 px-4 border border-white rounded w-full sm:w-auto sm:text-center text-center"
+                  className="bg-transparent text-white text-sm sm:text-lg py-2 ml-10 px-4 border border-white rounded w-full sm:w-auto sm:text-center text-center"
                 >
                   Logout
                 </button>
