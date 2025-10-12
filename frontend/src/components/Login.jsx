@@ -5,6 +5,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { BackgroundBeams } from "../components/ui/background-beams";
 import { BACKEND_URL } from "../../utils/utils.js";
+
+import { GoogleLogin } from "@react-oauth/google";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,6 +41,28 @@ function Login() {
       if (error.response) {
         setErrorMessage(error.response.data.errors || "Login failed!!!");
       }
+    }
+  };
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      // Send the Google token to your backend
+      const response = await axios.post(
+        `${BACKEND_URL}/user/google-login`,
+        { token: credentialResponse.credential },
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      console.log("Google Login successful: ", response.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      toast.success("Logged in with Google!");
+      // localStorage.setItem("user", JSON.stringify(response.data));
+      navigate("/");
+    } catch (error) {
+      console.error("Google login failed:", error);
+      toast.error("Google login failed");
     }
   };
 
@@ -127,6 +152,18 @@ function Login() {
               Login
             </button>
           </form>
+          <div className="text-center m-3 text-xl">OR</div>
+          <div className="mt-4 text-center">
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={() => toast.error("Google login failed")}
+            />
+          </div>
+          <div className="text-center m-3 text-sm">
+            <button className="">
+              <Link to="/admin/login">Click here to Login as Admin</Link>
+            </button>
+          </div>
         </div>
       </div>
       <BackgroundBeams className="z-10" />
