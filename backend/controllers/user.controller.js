@@ -6,6 +6,11 @@ import jwt from "jsonwebtoken";
 import config from "../config.js";
 import { Purchase } from "../models/purchase.model.js";
 import { Notes } from "../models/notes.model.js";
+
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(config.GOOGLE_CLIENT_ID);
+
 export const signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -103,6 +108,57 @@ export const logout = async (req, res) => {
   }
 };
 
+export const googleLogin = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Verify token with Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: config.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name, given_name, family_name } = payload;
+    // console.log(payload)
+    const password = "123456789";
+    const hashedPassword = await bcrypt.hash(password, 10);
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create user if doesn't exist
+      user = await User.create({
+        firstName: given_name,
+        lastName: family_name,
+        email: email,
+        password: hashedPassword, // required field, but user logs in with Google
+        // avatar: picture,
+      });
+    }
+
+    // Generate JWT
+    const jwtToken = jwt.sign({ id: user._id }, config.JWT_USER_PASSWORD, {
+      expiresIn: "1d",
+    });
+
+    const cookieOptions = {
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    };
+
+    res.cookie("jwt", jwtToken, cookieOptions);
+    res
+      .status(200)
+      .json({ message: "Google login successful", user, token: jwtToken });
+  } catch (error) {
+    console.error("Google login error:", error);
+    res.status(500).json({ errors: "Google login failed" });
+  }
+};
+
 export const getUserSetting = async (req, res) => {
   const { userId } = req;
   // console.log(userId)
@@ -111,7 +167,7 @@ export const getUserSetting = async (req, res) => {
   }
   try {
     const user = await User.findById(userId).select(
-      "firstName lastName Email Password"
+      "firstName lastName email password"
     );
     if (!user) {
       return res.status(404).json({ message: "User not found" });

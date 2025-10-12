@@ -187,6 +187,11 @@ export const notesDetail = async (req, res) => {
 import Stripe from "stripe";
 // import STRIPE_SECRET_KEY from "../config.js";
 import config from "../config.js";
+import { User } from "../models/user.model.js";
+import { sendMail } from "../utils/mail.js";
+// import bodyParser from "body-parser";
+// import nodemailer from "nodemailer";
+// import dotenv from "dotenv";
 
 const stripe = new Stripe(config.STRIPE_SECRET_KEY);
 // console.log(config.STRIPE_SECRET_KEY)
@@ -195,6 +200,9 @@ export const buyNotes = async (req, res) => {
   const { notesId } = req.params;
 
   try {
+    const user = await User.findById(userId);
+    const { email, firstName, lastName } = user;
+    // console.log(email)
     const notesFound = await Notes.findById(notesId);
     if (!notesFound) {
       return res.status(404).json({ errors: "Notes not Found" });
@@ -213,15 +221,106 @@ export const buyNotes = async (req, res) => {
       currency: "usd",
       payment_method_types: ["card"],
     });
-    return res
-      .status(200)
-      .json({
-        message: "Notes Purchased Successfully",
-        notesFound,
-        clientSecret: paymentIntent.client_secret,
-      });
+    sendMail(
+      user.email,
+      "🎉 Payment Successful — Thank You for Your Purchase!",
+      "",
+      `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <p>Hi <b>${user.firstName}</b>,</p>
+
+    <p>✅ Your payment of <b>₹${notesFound.price}</b> has been successfully received.</p>
+
+    <p>Thank you for purchasing <b>${notesFound.title}</b> on our website!</p>
+
+    <p>You can now access your purchased content anytime from your <b>Purchases</b> section.</p>
+
+    <p>If you have any questions or face any issues, feel free to reach out to us at 
+    <a href="mailto:support@smartnotes.com">support@smartnotes.com</a> — we’re always happy to help.</p>
+
+    <hr>
+    <h3>Order Details:</h3>
+    <ul>
+      <li>Amount Paid: ₹${notesFound.price}</li>
+      <li>Status: <b>Successful</b></li>
+    </ul>
+    <hr>
+
+    <p>Thanks again for choosing us 🙌</p>
+    <p><b>— The SmartNotes Team</b></p>
+  </div>
+  `
+    );
+
+    return res.status(200).json({
+      message: "Notes Purchased Successfully",
+      notesFound,
+      clientSecret: paymentIntent.client_secret,
+    });
   } catch (error) {
     console.log("error in buying Notes", error);
     return res.status(401).json({ errors: "Error in Buying Notes" });
   }
 };
+
+// export const webhook = async (req, res) => {
+//   const sig = req.headers["stripe-signature"];
+//   let event;
+
+//   try {
+//     event = stripe.webhooks.constructEvent(
+//       req.body,
+//       sig,
+//       process.env.STRIPE_WEBHOOK_SECRET
+//     );
+//   } catch (err) {
+//     console.error("Webhook signature verification failed:", err.message);
+//     return res.status(400).send(`Webhook Error: ${err.message}`);
+//   }
+
+//   // ✅ When payment is successful
+//   if (event.type === "payment_intent.succeeded") {
+//     const paymentIntent = event.data.object;
+
+//     // Get customer email if you have it stored (optional)
+//     const customerEmail = paymentIntent.receipt_email;
+//     const amount = paymentIntent.amount / 100;
+
+//     console.log("✅ Payment succeeded for", customerEmail);
+
+//     if (customerEmail) {
+//       await sendConfirmationEmail(customerEmail, amount);
+//     }
+//   }
+
+//   res.json({ received: true });
+// };
+
+// async function sendConfirmationEmail(to, amount) {
+//   const transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//       user: process.env.EMAIL_USER, // your gmail
+//       pass: process.env.EMAIL_PASS, // app password
+//     },
+//   });
+
+//   const mailOptions = {
+//     from: `"Your App" <${process.env.EMAIL_USER}>`,
+//     to,
+//     subject: "Payment Successful 🎉",
+//     html: `
+//       <h2>Payment Confirmation</h2>
+//       <p>Thank you for your payment of <b>₹${amount}</b>.</p>
+//       <p>Your payment has been successfully processed.</p>
+//       <p>— The Team</p>
+//     `,
+//   };
+
+//   try {
+//     await transporter.sendMail(mailOptions);
+//     console.log("✅ Email sent to:", to);
+//   } catch (err) {
+//     console.error("❌ Email send failed:", err);
+//   }
+// }

@@ -17,6 +17,8 @@ import AdminLogin from "./admin/AdminLogin";
 import Dashboard from "./admin/Dashboard";
 import { Toaster } from "react-hot-toast";
 import Settings from "./components/Settings";
+import ReviewList from "./components/Review"
+// import BuyWrapper from "./components/BuyWrapper";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -29,6 +31,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/review" element={<ReviewList />} />
+
 
           {/* Other Routes */}
           <Route path="/notes" element={<Notes />} />
@@ -44,6 +48,10 @@ function App() {
             path="/admin/dashboard"
             element={admin ? <Dashboard /> : <Navigate to={"/admin/login"} />}
           />
+          {/* <Route
+            path="/admin/dashboard"
+            element={ <Dashboard />}
+          /> */}
           <Route path="/admin/create-notes" element={<NotesCreate />} />
           <Route path="/admin/update-notes/:id" element={<Updatenotes />} />
           <Route path="/admin/our-notes" element={<OurNotes />} />

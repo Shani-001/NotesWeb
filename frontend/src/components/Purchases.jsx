@@ -174,11 +174,10 @@ function Purchases() {
                         : purchase.description}
                     </p>
                     <span className="text-white-700 font-bold text-sm">
-                      ${purchase.price} only
+                      ₹{purchase.price} only
                     </span>
                     {purchase.notesPdf?.url && (
                       <div className="mt-4">
-                        
                         <a
                           href={purchase.notesPdf.url}
                           download

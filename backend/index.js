@@ -37,11 +37,13 @@ import notesRoute from "./routes/notes.route.js";
 import userRoute from "./routes/user.route.js";
 import adminRoute from "./routes/admin.route.js";
 import orderRoute from "./routes/order.route.js";
+import reviewRoute from "./routes/review.route.js";
 //routes
 app.use("/api/v1/notes", notesRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/order", orderRoute);
+app.use("/api/v1/review", reviewRoute);
 
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')

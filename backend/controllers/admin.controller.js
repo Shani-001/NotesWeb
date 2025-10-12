@@ -6,6 +6,10 @@ import jwt from "jsonwebtoken";
 import config from "../config.js";
 import { Admin } from "../models/admin.model.js";
 
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(config.GOOGLE_CLIENT_ID);
+
 export const signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -98,5 +102,54 @@ export const logout = async (req, res) => {
   } catch (error) {
     res.status(500).json({ errors: "Error in logout" });
     console.log("Error in logout", error);
+  }
+};
+
+export const googleLogin = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Verify token with Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: config.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+
+    // Check if user exists
+    let user = await Admin.findOne({ email });
+
+    if (!user) {
+      // Create user if doesn't exist
+      user = await Admin.create({
+        firstName: name,
+        lastName: name,
+        email,
+        password: "123456789", // required field, but user logs in with Google
+        // avatar: picture,
+      });
+    }
+
+    // Generate JWT
+    const jwtToken = jwt.sign({ id: user._id }, config.JWT_USER_PASSWORD, {
+      expiresIn: "1d",
+    });
+
+    const cookieOptions = {
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    };
+
+    res.cookie("jwt", jwtToken, cookieOptions);
+    res
+      .status(200)
+      .json({ message: "Google login successful", user, token: jwtToken });
+  } catch (error) {
+    console.error("Google login error:", error);
+    res.status(500).json({ errors: "Google login failed" });
   }
 };

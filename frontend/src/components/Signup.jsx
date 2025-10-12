@@ -159,6 +159,11 @@ function Signup() {
               Signup
             </button>
           </form>
+          <div className="text-center m-3 text-sm">
+            <button className="">
+              <Link to="/admin/signup">Click here to Signup as Admin</Link>
+            </button>
+          </div>
         </div>
       </div>
       <BackgroundBeams className="z-10" />

@@ -4,14 +4,20 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 const stripePromise = loadStripe(
-  "pk_test_51SCM8rJMQOBE2NHqp4nPKw8SpQaQmYn74V7RlOPUiirJkIGutwjQG2JNUgTpjQXjN2uVeXdaOCpVJiMj6250ZfzE00N1VXpcjZ"
+  import.meta.env.VITE_STRIPE_KEY
 );
 
+const GOOGLE_CLIENT_ID = "1013802437325-6usj2epnmtd70ktebu5klln2ejcj14ju.apps.googleusercontent.com";
+
 createRoot(document.getElementById("root")).render(
-  <Elements stripe={stripePromise}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Elements>
+  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+    <Elements stripe={stripePromise}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Elements>
+  </GoogleOAuthProvider>
 );

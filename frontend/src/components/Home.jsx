@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 // import { WavyBackground } from "../components/ui/wavy-background";
 import { Vortex } from "../components/ui/vortex";
 import { BACKEND_URL } from "../../utils/utils.js";
+import ReviewList from "./Review";
 
 function Home() {
   const [notes, setNotes] = useState([]);
@@ -98,7 +99,11 @@ function Home() {
               SmartNotes
             </p>
             <p className="text-sm sm:text-base md:text-lg mt-4 text-white font-normal text-center px-2 sm:px-0">
-              Sharpen your Knowledge with notes crafted by experts.
+              Sharpen your knowledge with expertly crafted notes and study
+              materials.
+            </p>
+            <p className="text-sm sm:text-base md:text-lg mt-4 text-white font-normal text-center px-2 sm:px-0">
+              Join 250,000+ Students Using Our Notes
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-6 sm:mt-8">
@@ -125,7 +130,8 @@ function Home() {
         </div>
 
         <hr className="my-12 border-gray-600 h-5" />
-
+        <ReviewList />
+        <hr className="my-1 border-gray-600 h-5" />
         {/* Footer */}
         <footer className="bg-black text-white py-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">

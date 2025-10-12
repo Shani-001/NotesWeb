@@ -72,7 +72,7 @@ export const InfiniteMovingCards = ({
           //   className="relative w-[350px] max-w-full h-[60vh] shrink-0 rounded-2xl border border-b-0 border-zinc-200 bg-white/80 px-8 py-6 md:w-[450px]  m-1 z-10"
           //   key={item.title}>
          <li
-  className="relative w-[350px] max-w-full h-[60vh] shrink-0 rounded-2xl border-4 border-b-0 border-purple-500 bg-white/80 px-8 py-6 md:w-[450px] m-1 z-10 "
+  className="relative w-[350px] max-w-full h-[60vh] shrink-0 rounded-2xl border-4 border-b-0 border-white-500 bg-white/80 px-8 py-6 md:w-[450px] m-1 z-10 "
   key={item.title}>
 
 

@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LoaderOne } from "../components/ui/loader";
 import { BACKEND_URL } from "../../utils/utils.js";
 import { GrNotes } from "react-icons/gr";
+import { MdReviews } from "react-icons/md";
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -204,6 +205,7 @@ function Notes() {
                     <div>
                       <Link
                         to={`/buy/${notes._id}`} // Pass notesId in URL
+                        // to={`/checkout`} // Pass notesId in URL
                         className="bg-purple-500 w-full text-white px-4 py-2 rounded-lg hover:bg-blue-900 duration-300"
                       >
                         Buy Now

@@ -214,7 +214,7 @@ function Settings() {
 
                 <div>
                   <label className="block text-sm font-semibold mb-1">
-                    Email
+                    email
                   </label>
                   <input
                     type="email"
@@ -228,7 +228,7 @@ function Settings() {
 
                 <div>
                   <label className="block text-sm font-semibold mb-1">
-                    Password
+                    password
                   </label>
                   <input
                     type="password"
